@@ -1,0 +1,1 @@
+web: gunicorn FUZU_PAY.wsgi
