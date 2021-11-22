@@ -83,6 +83,12 @@ class Employee(models.Model):
     def get_employee_by_id(cls, employee_id):
         employee = cls.objects.get(employee_id=employee_id)
         return employee
+    
+    # get all employees where status is active
+    @classmethod
+    def get_all_active_employees(cls):
+        employees = cls.objects.filter(status='active')
+        return employees
 
     def __str__(self):
         return self.surname + ' - ' + self.other_names + ' - ' + self.employee_id + ' - ' + self.work_email
@@ -116,13 +122,22 @@ class Leave(models.Model):
     positon = models.CharField(max_length=100, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     employment_type = models.ForeignKey(EmploymentType, on_delete=models.CASCADE)
-    leave_type = models.ManyToManyField(LeaveType,related_name='leave_type')
-    leave_date_from = models.DateField(auto_now=True)
-    leave_date_to = models.DateField(auto_now=True)
+    leave_type = models.ForeignKey(LeaveType, on_delete=models.CASCADE,null=True)
+    leave_date_from = models.DateField(null=True, blank=True)
+    leave_date_to = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=50, default='pending')
     approved_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     # soft_delete = models.BooleanField(default=False)
+    
+    # get all employees where status is approve and date to is greater than today
+    @classmethod
+    def get_all_approved_leaves_and_active(cls):
+        leaves = cls.objects.filter(status='approved', leave_date_to__gte=dt.date.today())
+        return leaves
+    # get all employees where status is approve and date to is not greater than today
+    # def get_all_approved_leaves_and_inactive(self):
+    #     return self.objects.filter(status='approved', leave_date_to__lt=dt.date.today())
     
     def __str__(self):
         return self.employee.surname + ' - ' + self.leave_type.name + ' - ' + self.leave_date_from.strftime('%d-%m-%Y') + ' - ' + self.leave_date_to.strftime('%d-%m-%Y')

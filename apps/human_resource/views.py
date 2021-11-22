@@ -74,7 +74,7 @@ class LeaveView(APIView):
             # data['success'] = "Leave created successfully"
             return Response({"Leave created successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 
 # approve leave using its id
 class ApproveLeave(APIView):
@@ -91,7 +91,23 @@ class ApproveLeave(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 
+# onleave employee list
+class OnLeaveEmployees(APIView):
+    def get(self, request, format=None):  # get all onleave employees
+        all_employees = Leave.get_all_approved_leaves_and_active()
+        serializers = LeaveSerializer(all_employees, many=True)
+        return Response(serializers.data)
+
+
+# active employee list
+class ActiveEmployees(APIView):
+    def get(self, request, format=None):  # get all active employees
+        all_employees = Employee.get_all_active_employees()
+        serializers = EmployeeSerializer(all_employees, many=True)
+        return Response(serializers.data)
 
 # list departments
 class DepartmentView(APIView):
