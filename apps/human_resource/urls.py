@@ -17,5 +17,7 @@ urlpatterns = [
     path('api/jobs/active/', views.ActiveJobListingView.as_view(),name="active-jobs"), # active job listings
     path('api/jobs/past/', views.ActiveJobListingView.as_view(),name="active-jobs"), # past job listings
     path('api/applications/', views.ApplicationView.as_view(),name="applications"), # list applications
+    path('api/applications/new/', views.NewApplicationView.as_view(),name="new-application"), # new application
+    path('api/applications/past/', views.PastApplicationView.as_view(),name="past-applications"), # past applications
     path('api/applications/<str:application_id>/', views.ApplicationDetail.as_view(),name="application-detail"),
 ]

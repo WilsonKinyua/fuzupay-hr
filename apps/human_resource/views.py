@@ -205,8 +205,23 @@ class ApplicationView(APIView):
 
 
 
+# get new applications
+class NewApplicationView(APIView):
+    def get(self, request, format=None):  # get all new applications
+        all_applications = Application.get_new_application()
+        serializers = ApplicationSerializer(all_applications, many=True)
+        return Response(serializers.data)
+    
+    
+# get past applications
+class PastApplicationView(APIView):
+    def get(self, request, format=None):  # get all past applications
+        all_applications = Application.get_past_applications()
+        serializers = ApplicationSerializer(all_applications, many=True)
+        return Response(serializers.data)
 
-#  get a particular application
+
+#  get a spacific particular application
 class ApplicationDetail(APIView):
     def get_object(self, application_id):
         try:

@@ -236,11 +236,17 @@ class Application(models.Model):
         application = cls.objects.filter(status=status)
         return application
 
-    # get past applications where created_at is less than current date
+    # get past applications where created_at is more than one week ago 
     @classmethod
-    def get_past_application(cls):
-        past_application = cls.objects.filter(created_at__lt=dt.date.today(),soft_delete=False)
+    def get_past_applications(cls):
+        past_application = cls.objects.filter(created_at__lt=dt.date.today()-dt.timedelta(days=7))
         return past_application
+    
+    # get new applications where created_at is not less than one week ago
+    @classmethod
+    def get_new_application(cls):
+        new_application = cls.objects.filter(created_at__gte=dt.date.today() - dt.timedelta(days=7))
+        return new_application
 
     def __str__(self):
         return self.job_listing.job_title
