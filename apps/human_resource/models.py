@@ -177,13 +177,13 @@ class JobListing(models.Model):
     # get active job listing where deadline is greater than current date
     @classmethod
     def get_active_job_listing(cls):
-        active_job_listing = cls.objects.filter(deadline__gte=dt.date.today(),soft_delete=False)
+        active_job_listing = cls.objects.filter(deadline__gte=dt.date.today())
         return active_job_listing
 
     # get past job listing where deadline is less than current date
     @classmethod
     def get_past_job_listing(cls):
-        past_job_listing = cls.objects.filter(deadline__lt=dt.date.today(),soft_delete=False)
+        past_job_listing = cls.objects.filter(deadline__lt=dt.date.today())
         return past_job_listing
     
     def __str__(self):

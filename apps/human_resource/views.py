@@ -171,6 +171,23 @@ class JobListingView(APIView):
 
 
 
+# get active job listings
+class ActiveJobListingView(APIView): 
+    def get(self, request, format=None):  # get all active job listings
+        all_job_listings = JobListing.get_active_job_listing()
+        serializers = JobListingSerializer(all_job_listings, many=True)
+        return Response(serializers.data)
+    
+    
+
+# get past job listings
+class PastJobListingView(APIView):
+    def get(self, request, format=None):  # get all past job listings
+        all_job_listings = JobListing.get_past_job_listing()
+        serializers = JobListingSerializer(all_job_listings, many=True)
+        return Response(serializers.data)
+
+
 
 # create application
 class ApplicationView(APIView):
