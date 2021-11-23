@@ -72,7 +72,7 @@ class LeaveSerializer(serializers.ModelSerializer):
     employment_type = serializers.CharField(source='employment_type.name')
     leave_type = serializers.CharField(source='leave_type.name')
     employee = serializers.CharField(source='employee.other_names')
-    approved_by = serializers.CharField(source='user.username')
+    # approved_by = serializers.CharField(source='user.username')
 
     class Meta:
         model = Leave
