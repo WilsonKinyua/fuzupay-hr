@@ -63,7 +63,7 @@ class EmployeeDetail(APIView):  # get employee details
 # list leave
 class LeaveView(APIView):
     def get(self, request, format=None):  # get all leave
-        all_leave = Leave.objects.all()
+        all_leave = Leave.get_all_pending_leaves()
         serializers = LeaveSerializer(all_leave, many=True)
         return Response(serializers.data)
 
