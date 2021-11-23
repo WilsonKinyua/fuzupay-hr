@@ -139,11 +139,12 @@ class Leave(models.Model):
     # def get_all_approved_leaves_and_inactive(self):
     #     return self.objects.filter(status='approved', leave_date_to__lt=dt.date.today())
     
-    # get all leaves where status is pending
+    # get all leaves where status is pending and not other status
     @classmethod
     def get_all_pending_leaves(cls):
         leaves = cls.objects.filter(status='pending')
         return leaves
+   
     
     def __str__(self):
         return self.employee.surname + ' - ' + self.leave_type.name + ' - ' + self.leave_date_from.strftime('%d-%m-%Y') + ' - ' + self.leave_date_to.strftime('%d-%m-%Y')
