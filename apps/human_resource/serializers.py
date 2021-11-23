@@ -26,7 +26,7 @@ class EmploymentTypeSerializer(serializers.ModelSerializer):
 class BankDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BankDetails
-        fields = ['id', 'account_number', 'bank_name', 'branch_name']
+        fields = '__all__'
 
 
 # leave type serializer
